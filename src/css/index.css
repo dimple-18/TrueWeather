@@ -2,40 +2,197 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+
+  /* Remove automatic dark/light; we control colors ourselves */
+  color: #e5e7eb; /* light gray text */
+  background: radial-gradient(circle at top, #0ea5e9 0, #020617 45%, #020617 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  box-sizing: border-box;
 }
 
 body {
-  width: 100%;
   margin: 0;
-  display: flex;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 1.5rem;
+  background: transparent; /* we use :root bg */
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* Generic layout wrapper – if your root div has className="App" or similar
+   this will make everything centered and nicer */
+#root,
+.App,
+.weather-app {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Top title "Weather App" */
+header,
+.app-header {
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #f9fafb;
+  margin-bottom: 1.5rem;
+}
+
+/* Main container where your heading + card live */
+.main-container,
+.weather-container {
+  border-radius: 18px;
+  padding: 2.5rem 2rem 2.8rem;
+  background: rgba(15, 23, 42, 0.82); /* slate with glass effect */
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+/* "Check Weather Of Your City" heading */
+h1,
+.main-heading {
+  text-align: center;
+  font-weight: 400;
+  font-size: 2.4rem;
+  letter-spacing: 0.05em;
+  color: #f9fafb;
+  margin: 0 0 2.2rem;
+}
+
+/* Weather card */
+.weather-card {
+  margin: 0 auto 2rem;
+  max-width: 340px;
+  border-radius: 16px;
+  padding: 1.4rem 1.5rem 1.6rem;
+  background: linear-gradient(145deg, #020617, #0f172a);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+}
+
+/* Top row in card: time + condition */
+.weather-card-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin-bottom: 0.7rem;
+}
+
+/* City name */
+.weather-city {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #f9fafb;
+  margin-bottom: 0.7rem;
+}
+
+/* Temp row */
+.weather-temp-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.weather-temp {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* Small circle icon */
+.weather-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 25%, #fef9c3 0, #facc15 40%, #f97316 100%);
+}
+
+/* Buttons in card (Refresh / Delete) */
+.weather-card-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: #0ea5e9;
+  color: #0b1120;
+  box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(14, 165, 233, 0.55);
+  background: #38bdf8;
+}
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0 6px 15px rgba(15, 23, 42, 0.9);
+}
+
+/* Input + Check button row */
+.form-row,
+.search-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.4rem;
+}
+
+input[type="text"],
+input[type="search"] {
+  min-width: 260px;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+input::placeholder {
+  color: #6b7280;
+}
+
+input:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 1px #0ea5e9;
+}
+
+/* Remove old prefers-color-scheme tweaks */
+@media (max-width: 640px) {
+  body {
+    padding: 2rem 1rem;
   }
-  a:hover {
-    color: #747bff;
+
+  h1,
+  .main-heading {
+    font-size: 1.9rem;
   }
-  button {
-    background-color: #f9f9f9;
+
+  .main-container,
+  .weather-container {
+    padding: 1.8rem 1.4rem 2.1rem;
+  }
+
+  .weather-card {
+    width: 100%;
   }
 }
